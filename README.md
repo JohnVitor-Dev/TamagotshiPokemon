@@ -12,7 +12,7 @@
 
 ## Downloads
 
-Download from [releases](https://github.com/shadowsocks/shadowsocks-windows/releases).
+Download from [releases]().
 
 ## Development
 
