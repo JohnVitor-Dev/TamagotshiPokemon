@@ -1,4 +1,4 @@
-<img src="Shadowsocks.WPF/Resources/ssw128.png" alt="[logo]" width="48"/> Tamagotchi Pokemon
+<img src="icon.png" alt="[logo]" width="48"/> Tamagotchi Pokemon
 =======================
 
 [![Build](https://github.com/shadowsocks/shadowsocks-windows/workflows/Build/badge.svg)](https://github.com/shadowsocks/shadowsocks-windows/actions?query=workflow%3ABuild)
@@ -21,8 +21,8 @@ Download from [releases](https://github.com/shadowsocks/shadowsocks-windows/rele
 
 ### Build
 
-1. Clone the repository recursively.
+1. Clone o repositório recursivamente.
 ```bash
-$ git clone --recursive https://github.com/shadowsocks/shadowsocks-windows.git
+$ git clone --recursive https://github.com/JohnVitor-Dev/API_Pokemon.git
 ```
-2. Open the repository in VS2022, switch to the _Release_ configuration, and build the solution.
+2. Abra o repositório no VS2022, alterne para a configuração _Release_ e compile a solução.
