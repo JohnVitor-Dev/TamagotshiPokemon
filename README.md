@@ -1,9 +1,10 @@
-<img src="icon.png" alt="[logo]" width="48"/> Tamagotchi Pokemon
+<div align="center">
+  <img src="icon.png" alt="[logo]" width="200"/> 
+  <br/>
+  <h1>Tamagotchi Pokemon</h1>
+</div>
+
 =======================
-
-[![Build](https://github.com/shadowsocks/shadowsocks-windows/workflows/Build/badge.svg)](https://github.com/shadowsocks/shadowsocks-windows/actions?query=workflow%3ABuild)
-[![Release](https://github.com/shadowsocks/shadowsocks-windows/workflows/Release/badge.svg)](https://github.com/shadowsocks/shadowsocks-windows/actions?query=workflow%3ARelease)
-
 ## Features
 
 - Conexão com a API Pokémon.
