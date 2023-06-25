@@ -46,6 +46,7 @@ public static class APIpokemon
         Console.WriteLine("Altura: " + mascote.height);
         Console.WriteLine("Peso: " + mascote.weight);
         Console.WriteLine("\nHabilidades:");
+        Console.ReadLine();
 
         foreach (AbilityInfo abilityInfo in mascote.Abilities)
         {
