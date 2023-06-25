@@ -1,10 +1,32 @@
 ﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using RestSharp;
 using RestSharp.Authenticators;
+using Newtonsoft.Json;
 
 public static class APIpokemon
 {
+    public class Ability
+    {
+        public string Name { get; set; }
+    }
+
+    public class AbilityInfo
+    {
+        public Ability Ability { get; set; }
+    }
+
+    public class Mascote
+    {
+        public string name { get; set; }
+        public int height { get; set; }
+        public int weight { get; set; }
+        public List<AbilityInfo> Abilities { get; set; }
+
+    }
+
     public static void Main()
     {
         int ID_Pokemon = EscolherPokemon();
@@ -17,8 +39,19 @@ public static class APIpokemon
         var response = client.Execute(request);
 
         Console.Clear();
-        Console.WriteLine(response.Content);
-        
+
+        Mascote mascote = JsonConvert.DeserializeObject<Mascote>(response.Content);
+
+        Console.WriteLine("Nome do Pokémon: " + mascote.name);
+        Console.WriteLine("Altura: " + mascote.height);
+        Console.WriteLine("Peso: " + mascote.weight);
+        Console.WriteLine("\nHabilidades:");
+
+        foreach (AbilityInfo abilityInfo in mascote.Abilities)
+        {
+            Console.WriteLine(abilityInfo.Ability.Name);
+        }
+
     }
 
     public static int EscolherPokemon()
