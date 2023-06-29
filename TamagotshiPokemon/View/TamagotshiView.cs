@@ -20,16 +20,13 @@ namespace Tamagotshi.View
         {
             Console.WriteLine("\n\nQual o seu nome?");
         }
-        public static void MenuInicial(string nome)
+        public static void MenuInicial(string userName)
         {
             Console.WriteLine("\n------------------------- MENU -------------------------");
-            Console.WriteLine($"{nome} Você deseja: \n ");
+            Console.WriteLine($"{userName} Você deseja: \n ");
             Console.WriteLine("1 - Adotar um mascote virtual");
             Console.WriteLine("2 - Ver seus mascotes");
             Console.WriteLine("3 - Sair");
-
-            int Escolha = int.Parse(Console.ReadLine());
-            TControl.MenuSystem(nome, Escolha);
         }
 
         public static void Adotar(string nome)

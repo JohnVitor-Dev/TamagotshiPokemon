@@ -13,29 +13,31 @@ namespace Tamagotshi.Controller
         {
             int jogar = 1;
 
-            while (jogar == 1)
+            switch(Escolha)
             {
-                switch(Escolha)
-                {
-                    case 1:
-                        TView.Adotar(nome);
-                        break;
-                    case 2:
-                        TView.MeusMascotes();
-                        break;
-                    case 3:
-                        jogar = 0;
-                        break;
-                    default:
-                        Console.WriteLine("Opção Inválida!!");
-                        break;
+                case 1:
+                    TView.Adotar(nome);
+                    break;
+                case 2:
+                    TView.MeusMascotes();
+                    break;
+                case 3:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Opção Inválida!!");
+                    break;
                 }
-            }
         }
 
-        public static void MenuInicial()
+        public static void MenuInicial(string userName)
         {
-            TView.MenuInicial(PokemonModel)
+            Console.Clear();
+            TView.Titulo();
+            TView.MenuInicial(userName);
+
+            int Escolha = int.Parse(Console.ReadLine());
+            TControl.MenuSystem(userName, Escolha);
         }   
 
 

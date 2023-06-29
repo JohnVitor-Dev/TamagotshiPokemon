@@ -13,11 +13,8 @@ public static class TamagotshiPokemon
         TView.Titulo();
         TView.GetName();
         UserModel.User user = new UserModel.User();
-        user.user = Console.ReadLine();
+        user.userName = Console.ReadLine();
 
-
-
-
-        //MenuInicial(nameUsuario);
+        TControl.MenuInicial(user.userName);
     }
 }
