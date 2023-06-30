@@ -48,9 +48,51 @@ namespace Tamagotshi.View
         }
         public static void ConcluirAdocao(string userName, string PokeName)
         {
-            Console.Clear();
-            Console.WriteLine("MASCOTE ADOTADO COM SUCESSO, O OVO ESTÁ CHOCANDO: \n");
-            Console.WriteLine(@$"
+            OVO(PokeName);
+            Console.WriteLine("\n1 - Voltar");
+        }
+        public static void MeusMascotes(string M1, string M2, string M3)
+        {
+            Console.WriteLine("\n----------------------- Mascotes -----------------------");
+            if(M1 == null)
+            {
+                Console.WriteLine("Você não possui mascotes!");
+            }
+            else if (M2 == null)
+            {
+                Console.WriteLine($"1 - {M1}");
+            }
+            else if(M3 == null)
+            {
+                Console.WriteLine($"1 - {M1}");
+                Console.WriteLine($"2 - {M2}");
+            }
+            else
+            {
+                Console.WriteLine($"1 - {M1}");
+                Console.WriteLine($"2 - {M2}");
+                Console.WriteLine($"3 - {M3}");
+            }
+
+            Console.WriteLine("\n4 - Voltar");
+        }
+        public static void API(string userName, float height, float weight, string PokeName)
+        {
+            Console.WriteLine($"\n------------------ {PokeName} ------------------");
+            Console.WriteLine("Nome do Pokémon: " + userName);
+            Console.WriteLine("Altura: " + height);
+            Console.WriteLine("Peso: " + weight);
+            Console.WriteLine("\nHabilidades:");
+        }
+
+        public static void OVO(string PokeName)
+        {
+            string frase = "MASCOTE ADOTADO COM SUCESSO, O OVO ESTÁ CHOCANDO:";
+            string linha = "________________________________________________";
+
+            // Frama 1
+            Console.WriteLine(linha);
+            Console.WriteLine(@"
                   ████          
               ████░░▒▒████      
             ██░░░░░░░░▒▒▒▒██    
@@ -63,23 +105,139 @@ namespace Tamagotshi.View
           ██░░░░░░░░▒▒▒▒▒▒▒▒██  
           ██▒▒▒▒░░░░▒▒▒▒▒▒▒▒██  
             ████▒▒▒▒▒▒▒▒████    
-                ████████        
+                ████████        ");
 
-               {PokeName}
-");
+            Console.WriteLine(linha);
+            Console.WriteLine(frase);
+            Thread.Sleep(3000);
+
+            // Frame 2
+            Console.Clear();
+            Console.WriteLine(linha);
+            Console.WriteLine(@"
+                  ████          
+              ████░░▒▒████      
+            ██░░░░░░░░▒▒▒▒██    
+            ██░░░░░░░░░---██    
+          ██░░░░░░░░░░░/▒▒▒▒██  
+          ██░/___░░░░░░░▒▒▒▒██  
+        ██--/░░░░\░░░░░░▒▒▒▒▒▒██
+        ██░░░░░░░░░░░░░░▒▒▒▒▒▒██
+        ██▒▒░░░░░░░░░░▒▒▒\▒▒▒▒██
+          ██░░░░░░░░▒▒▒▒▒---██  
+          ██▒▒▒▒░░░░▒▒▒▒▒▒▒▒██  
+            ████▒▒▒▒▒▒▒▒████    
+                ████████        ");
+
+            Console.WriteLine(linha);
+            Console.WriteLine(frase);
+            Thread.Sleep(3000);
+
+            // Frame 3
+            Console.Clear();
+            Console.WriteLine(linha);
+            Console.WriteLine(@"
+                  ████          
+              ████░░▒▒████      
+            ██░░░░░░░░▒▒▒▒██    
+            ██░░░__░░░░---██    
+          ██░░░░░░░\░_░/▒▒▒▒██  
+          ██░)___░░░/░░░▒▒▒▒██  
+        ██--(░░░░\__░░░░▒(___▒██
+        ██░░░░░░░/░░)____▒▒▒▒▒██
+        ██▒▒░░__/░░░░)▒▒▒)▒▒▒▒██
+          ██░(░░░░__(▒▒▒▒---██  
+          ██▒▒▒▒░░░░▒▒▒▒▒▒▒▒██  
+            ████▒▒▒▒▒▒▒▒████    
+                ████████        ");
+
+            Console.WriteLine(linha);
+            Console.WriteLine(frase);
+            Thread.Sleep(3000);
+
+            // Frame 4
+            Console.Clear();
+            Console.WriteLine(linha);
+            Pokemon(PokeName);
+            Console.WriteLine(linha);
+            
+
 
         }
-        public static void MeusMascotes()
+        public static void Pokemon(string PokeName)
         {
-            Console.WriteLine("Mascotes");
-        }
-        public static void API(string userName, float height, float weight, string PokeName)
-        {
-            Console.WriteLine($"\n------------------ {PokeName} ------------------");
-            Console.WriteLine("Nome do Pokémon: " + userName);
-            Console.WriteLine("Altura: " + height);
-            Console.WriteLine("Peso: " + weight);
-            Console.WriteLine("\nHabilidades:");
+            if(PokeName == "Bulbasaur")
+            {
+                Console.WriteLine(@"              
+                        ##  ##          
+                      ##::##::##        
+                    ####::----##        
+                ####::@@@@::@@--####    
+              ##::::@@--@@::@@--::@@##  
+      ##    ##++--@@--::@@::::@@::--@@##
+    ##--######++@@++::@@--::::::@@--++##
+    ##------++####++++@@--::::::@@++++##
+    ##----++++++++##++@@++++++++@@++++##
+  ##------++++++--++######++++++@@++##  
+  ##++----------------++##++++@@####    
+####++------++--------##++######++##    
+##--------++--######--++++++++++++++##  
+  ##--------####    ++++++##++++++++##  
+  ##++------####  ++++++++++##++++++##  
+    ####++++++++++++##++++++##++  ##    
+        ############++++++++######      
+                  ##  ++  ####          
+                    ########            ");
+            }
+            else if(PokeName == "Charmander")
+            {
+                Console.WriteLine(@"                                        
+        ##                              
+      ##++##                            
+    ##++++##            ########        
+    ##++++##          ##--------##      
+  ##++++++++##      MM------------##    
+  ##++  ++++##      MM------------##    
+  ##++    ++##      MM--------------##  
+    ####  ##        MM----##  --------##
+      ##--##      ##------####--------##
+      ####--##  ##--------####--------##
+        ##----####------------------##  
+        ##----------------------####    
+        ####----------##----####        
+          ####------####    ##          
+            ####------    ##  ##        
+              ##------  ######          
+              ####--####                
+              ##  --mm                  
+              ######++                  ");
+            }
+            else if(PokeName == "Squirtle")
+            {
+                Console.WriteLine(@"                            
+          ########                      ##########          
+        ##++++++++##                ####++++++++++####      
+      ##MM++++++++++####      ######++++++++++++++++++##    
+      ##MM++++++++++####      ######++++++++++++++++++##    
+      ##MM####MM++++####  ####@@@@##++++++++++++++++++##    
+      ##MMMMMM##MM++++++##@@@@@@@@MM++++++++++++++++++@@##  
+        ##MMMM##MM++####@@@@@@    MM++++####  ++++++++++##  
+          ########MM####@@@@@@    MMMM++@@@@##++++++++MM##  
+          ########MM####@@@@@@    MMMM++@@@@##++++++++MM##  
+                ####@@@@@@@@  ####MMMMMM@@@@##++MMMMMM##    
+                  ##@@@@@@  ++++++####MMMMMMMMMM######      
+                  ##@@@@@@  MM++++++++##########++####      
+                  ##@@@@@@  ##MMMMMM++##      ####          
+                  ##@@@@@@  ##MMMMMM++##      ####          
+                  ##@@@@@@    ########      ##              
+                    ####  ##++          ####MM##            
+                    ####  ##++      ##########              
+                        ####++########                      
+                        ####++########                      
+                        ##MMMMMMMM##                        
+                          ########                          
+                                                            ");
+            }
         }
 
     }

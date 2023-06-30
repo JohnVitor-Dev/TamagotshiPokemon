@@ -38,7 +38,16 @@ namespace API.Controller
 
             if (Escolha == 1)
             {
-                TView.ConcluirAdocao(userName, PokeName);
+                if (TControl.PossuiPokemon(PokeName) == true)
+                {
+                    TControl.ConcluirAdocao(userName, PokeName);
+                } 
+                else
+                {
+                    Console.WriteLine("Pokemon já foi adotado!");
+                    Thread.Sleep(3000);
+                    TControl.Adotar(userName);
+                }
             }
             else if (Escolha == 2)
             {
