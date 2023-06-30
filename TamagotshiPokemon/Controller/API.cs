@@ -3,17 +3,15 @@ using Newtonsoft.Json;
 using Pokemon.Model;
 using RestSharp;
 using Tamagotshi.View;
+using Tamagotshi.Controller;
 
 namespace API.Controller
 {
     public static class APIControl
     {
-        public static void ConexaoAPI(string nome, string PokeName, int ID_Pokemon)
+        public static void ConexaoAPI(string userName, string PokeName, int ID_Pokemon)
         {
-            //Console.Clear();
-            //Titulo();
-            //Console.WriteLine($"\n------------------ {PokeName} ------------------");
-
+            
             var options = new RestClientOptions($"https://pokeapi.co/api/v2/pokemon/{ID_Pokemon}/");
             var client = new RestClient(options);
 
@@ -23,7 +21,9 @@ namespace API.Controller
 
             PokemonModel.Pokemon pokemon = JsonConvert.DeserializeObject<PokemonModel.Pokemon>(response.Content);
 
-            TView.API(pokemon.name, pokemon.height, pokemon.weight);
+            Console.Clear();
+            TView.Titulo();
+            TView.API(pokemon.name, pokemon.height, pokemon.weight, PokeName);
 
 
             foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities)
@@ -33,19 +33,20 @@ namespace API.Controller
 
             Console.WriteLine("\n1 - Adotar");
             Console.WriteLine("2 - Voltar");
+
             int Escolha = int.Parse(Console.ReadLine());
 
             if (Escolha == 1)
             {
-                TView.ConcluirAdocao(nome, PokeName);
+                TView.ConcluirAdocao(userName, PokeName);
             }
             else if (Escolha == 2)
             {
-                TView.Adotar(nome);
+                TControl.Adotar(userName);
             }
             else
             {
-                ConexaoAPI(nome, PokeName, ID_Pokemon);
+                ConexaoAPI(userName, PokeName, ID_Pokemon);
             }
         }
     }

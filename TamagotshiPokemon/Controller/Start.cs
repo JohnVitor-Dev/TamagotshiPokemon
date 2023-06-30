@@ -15,6 +15,7 @@ public static class TamagotshiPokemon
         UserModel.User user = new UserModel.User();
         user.userName = Console.ReadLine();
 
+        // Menu Inicial
         TControl.MenuInicial(user.userName);
     }
 }

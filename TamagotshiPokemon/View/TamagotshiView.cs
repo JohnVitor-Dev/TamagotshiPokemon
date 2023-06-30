@@ -29,83 +29,24 @@ namespace Tamagotshi.View
             Console.WriteLine("3 - Sair");
         }
 
-        public static void Adotar(string nome)
+        public static void Adotar(string userName)
         {
-            Console.Clear();
-            Titulo();
-
             Console.WriteLine("\n------------------ ADOTAR UM MASCOTE ------------------");
-            Console.WriteLine($"{nome} Escolha uma espécie: \n ");
+            Console.WriteLine($"{userName} Escolha uma espécie: \n ");
             Console.WriteLine("1 - Bulbasaur");
             Console.WriteLine("2 - Charmander");
             Console.WriteLine("3 - Squirtle");
             Console.WriteLine("4 - Voltar");
-
-            int Escolha = int.Parse(Console.ReadLine());
-            string PokeName = "";
-            int ID_Pokemon = 0;
-
-            if (Escolha == 1)
-            {
-                PokeName = "Bulbasaur";
-                ID_Pokemon = 1;
-            }
-            else if (Escolha == 2)
-            {
-                PokeName = "Charmander";
-                ID_Pokemon = 4;
-            }
-            else if (Escolha == 3)
-            {
-                PokeName = "Squirtle";
-                ID_Pokemon = 7;
-            }
-            else if (Escolha == 4)
-            {
-                MenuInicial(nome);
-            }
-            else
-            {
-                Adotar(nome);
-            }
-
-            AdotarInfo(nome, PokeName, ID_Pokemon);
-
-
         }
-        public static void AdotarInfo(string nome, string PokeName, int ID_Pokemon)
+        public static void AdotarInfo(string userName, string PokeName)
         {
-            Console.Clear();
-            Titulo();
-
             Console.WriteLine("\n-------------------------------------------------------");
-            Console.WriteLine($"{nome} Você deseja: \n ");
+            Console.WriteLine($"{userName} Você deseja: \n ");
             Console.WriteLine($"1 - Saber mais sobre {PokeName}");
             Console.WriteLine($"2 - Adotar {PokeName}");
             Console.WriteLine("3 - Voltar");
-
-            int Escolha = int.Parse(Console.ReadLine());
-
-            if (Escolha == 1)
-            {
-                //ConexaoAPI(nome, PokeName, ID_Pokemon);
-            }
-            else if (Escolha == 2)
-            {
-                ConcluirAdocao(nome, PokeName);
-            }
-            else if (Escolha == 3)
-            {
-                Adotar(nome);
-            }
-            else
-            {
-                AdotarInfo(nome, PokeName, ID_Pokemon);
-            }
-
-
         }
-        public static void ConcluirAdocao(string nome, string PokeName)
+        public static void ConcluirAdocao(string userName, string PokeName)
         {
             Console.Clear();
             Console.WriteLine("MASCOTE ADOTADO COM SUCESSO, O OVO ESTÁ CHOCANDO: \n");
@@ -132,9 +73,10 @@ namespace Tamagotshi.View
         {
             Console.WriteLine("Mascotes");
         }
-        public static void API(string name, float height, float weight)
+        public static void API(string userName, float height, float weight, string PokeName)
         {
-            Console.WriteLine("Nome do Pokémon: " + name);
+            Console.WriteLine($"\n------------------ {PokeName} ------------------");
+            Console.WriteLine("Nome do Pokémon: " + userName);
             Console.WriteLine("Altura: " + height);
             Console.WriteLine("Peso: " + weight);
             Console.WriteLine("\nHabilidades:");
