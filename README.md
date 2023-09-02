@@ -9,10 +9,11 @@
 
 - Conexão com a API Pokémon.
 - Característica do pokémon.
+- Sistema de saves com SQLite.
 
 ## Downloads
 
-Download from [releases]().
+Em breve...
 
 ## Development
 
@@ -22,8 +23,4 @@ Download from [releases]().
 
 ### Build
 
-1. Clone o repositório recursivamente.
-```bash
-$ git clone --recursive https://github.com/JohnVitor-Dev/API_Pokemon.git
-```
-2. Abra o repositório no VS2022, alterne para a configuração _Release_ e compile a solução.
+Em breve...
