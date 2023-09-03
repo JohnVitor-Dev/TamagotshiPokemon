@@ -1,11 +1,22 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using SQLitePCL;
+using System;
 using Tamagotshi.Controller;
+using Tamagotshi.Data;
+using User.Model;
 
 namespace Tamagotshi.View
 {
-    public static class TView
+    public class TView
     {
-        public static void Titulo()
+
+        private TControl tControl;
+        public TView(TControl _tControl)
+        {
+            tControl = _tControl;
+        }
+
+        public void Titulo()
         {
             Console.WriteLine(" _                                    _       _     _ ");
             Console.WriteLine("| |                                  | |     | |   (_)");
@@ -16,11 +27,21 @@ namespace Tamagotshi.View
             Console.WriteLine("                           __/ |                      ");
             Console.WriteLine("                          |___/                       ");
         }
-        public static void GetName()
+        public void GetUser()
         {
-            Console.WriteLine("\n\nQual o seu nome?");
+            Console.WriteLine("\n\n1 - Novo Usuário");
+            Console.WriteLine("2 - Continuar");
         }
-        public static void MenuInicial(string userName)
+
+        public void ExibirUsers(List<UserModel> users)
+        {
+            foreach (var user in users)
+            {
+                Console.WriteLine($"ID: {user.Id} | Nome: {user.Name}");
+            }
+        }
+
+        public void MenuInicial(string userName)
         {
             Console.WriteLine("\n------------------------- MENU -------------------------");
             Console.WriteLine($"{userName} Você deseja: \n ");
@@ -29,7 +50,7 @@ namespace Tamagotshi.View
             Console.WriteLine("3 - Sair");
         }
 
-        public static void Adotar(string userName)
+        public void Adotar(string userName)
         {
             Console.WriteLine("\n------------------ ADOTAR UM MASCOTE ------------------");
             Console.WriteLine($"{userName} Escolha uma espécie: \n ");
@@ -38,7 +59,7 @@ namespace Tamagotshi.View
             Console.WriteLine("3 - Squirtle");
             Console.WriteLine("4 - Voltar");
         }
-        public static void AdotarInfo(string userName, string PokeName)
+        public void AdotarInfo(string userName, string PokeName)
         {
             Console.WriteLine("\n-------------------------------------------------------");
             Console.WriteLine($"{userName} Você deseja: \n ");
@@ -46,37 +67,29 @@ namespace Tamagotshi.View
             Console.WriteLine($"2 - Adotar {PokeName}");
             Console.WriteLine("3 - Voltar");
         }
-        public static void ConcluirAdocao(string userName, string PokeName)
+        public void ConcluirAdocao(string userName, string PokeName)
         {
             OVO(PokeName);
             Console.WriteLine("\n1 - Voltar");
         }
-        public static void MeusMascotes(string M1, string M2, string M3)
+        public void MeusMascotes(List<string> mascotes)
         {
             Console.WriteLine("\n----------------------- Mascotes -----------------------");
-            if(M1 == null)
+            if (mascotes.Count == 0)
             {
                 Console.WriteLine("Você não possui mascotes!");
             }
-            else if (M2 == null)
-            {
-                Console.WriteLine($"1 - {M1}");
-            }
-            else if(M3 == null)
-            {
-                Console.WriteLine($"1 - {M1}");
-                Console.WriteLine($"2 - {M2}");
-            }
             else
             {
-                Console.WriteLine($"1 - {M1}");
-                Console.WriteLine($"2 - {M2}");
-                Console.WriteLine($"3 - {M3}");
+                foreach(string mascote in mascotes)
+                {  
+                    Console.WriteLine(mascote);
+                }
             }
 
             Console.WriteLine("\n4 - Voltar");
         }
-        public static void API(string userName, float height, float weight, string PokeName)
+        public void API(string userName, float height, float weight, string PokeName)
         {
             Console.WriteLine($"\n------------------ {PokeName} ------------------");
             Console.WriteLine("Nome do Pokémon: " + userName);
@@ -85,7 +98,7 @@ namespace Tamagotshi.View
             Console.WriteLine("\nHabilidades:");
         }
 
-        public static void OVO(string PokeName)
+        public void OVO(string PokeName)
         {
             string frase = "MASCOTE ADOTADO COM SUCESSO, O OVO ESTÁ CHOCANDO:";
             string linha = "________________________________________________";
@@ -109,7 +122,7 @@ namespace Tamagotshi.View
 
             Console.WriteLine(linha);
             Console.WriteLine(frase);
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
             // Frame 2
             Console.Clear();
@@ -131,7 +144,7 @@ namespace Tamagotshi.View
 
             Console.WriteLine(linha);
             Console.WriteLine(frase);
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
             // Frame 3
             Console.Clear();
@@ -153,18 +166,15 @@ namespace Tamagotshi.View
 
             Console.WriteLine(linha);
             Console.WriteLine(frase);
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
             // Frame 4
             Console.Clear();
             Console.WriteLine(linha);
             Pokemon(PokeName);
             Console.WriteLine(linha);
-            
-
-
         }
-        public static void Pokemon(string PokeName)
+        public void Pokemon(string PokeName)
         {
             if(PokeName == "Bulbasaur")
             {

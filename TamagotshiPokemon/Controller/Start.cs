@@ -4,19 +4,28 @@ using Tamagotshi.View;
 using Pokemon.Model;
 using System.Reflection.Metadata;
 using User.Model;
+using Tamagotshi.Data;
+using API.Controller;
 
-public static class TamagotshiPokemon
+namespace Start.Controller
 {
-    public static void Main()
+    public static class TamagotshiPokemon
     {
-        // Iniciar o Tamagotshi pegando o nome de usuário.
-        TView.Titulo();
-        TView.GetName();
-        UserModel.User user = new UserModel.User();
-        user.userName = Console.ReadLine();
+        // Cria uma instância do Controller e do View
+        static TContext _context = new TContext();
+        static TView tView = new TView(tControl);
+        static TControl tControl = new TControl(tView, _context);
+
+        public static void Main()
+        {
+            APIControl _APIControl = new APIControl(tView, tControl);
+
+            // Iniciar o Tamagotshi, selecionar ou criar um usuário.
+            tControl.User();
 
 
-        // Menu Inicial
-        TControl.MenuInicial(user.userName);
+            //Para o encerramento automático do console.
+            string stop = Console.ReadLine();
+        }
     }
 }

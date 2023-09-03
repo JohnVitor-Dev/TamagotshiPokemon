@@ -4,12 +4,25 @@ using Pokemon.Model;
 using RestSharp;
 using Tamagotshi.View;
 using Tamagotshi.Controller;
+using Start.Controller;
 
 namespace API.Controller
 {
-    public static class APIControl
+    public class APIControl
     {
-        public static void ConexaoAPI(string userName, string PokeName, int ID_Pokemon)
+       
+        // Criação das dependências
+        private TView tView;
+        private TControl tControl;
+
+        public APIControl(TView _tView, TControl _tControl)
+        {
+            tView = _tView;
+            tControl = _tControl;
+        }
+       
+        // Conexão Com a API
+        public void ConexaoAPI(string userName, string PokeName, int ID_Pokemon)
         {
             
             var options = new RestClientOptions($"https://pokeapi.co/api/v2/pokemon/{ID_Pokemon}/");
@@ -22,9 +35,8 @@ namespace API.Controller
             PokemonModel.Pokemon pokemon = JsonConvert.DeserializeObject<PokemonModel.Pokemon>(response.Content);
 
             Console.Clear();
-            TView.Titulo();
-            TView.API(pokemon.name, pokemon.height, pokemon.weight, PokeName);
-
+            tView.Titulo();
+            tView.API(pokemon.name, pokemon.height, pokemon.weight, PokeName);
 
             foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities)
             {
@@ -34,27 +46,38 @@ namespace API.Controller
             Console.WriteLine("\n1 - Adotar");
             Console.WriteLine("2 - Voltar");
 
-            int Escolha = int.Parse(Console.ReadLine());
+            string escolha = Console.ReadLine();
+            int number;
+            bool escolheisNumber = int.TryParse(escolha, out number);
 
-            if (Escolha == 1)
+            if(escolheisNumber == false)
             {
-                if (TControl.PossuiPokemon(PokeName) == true)
+                Console.WriteLine("Número inválido!");
+                Thread.Sleep(2000);
+                ConexaoAPI(userName, PokeName, ID_Pokemon);
+            }
+
+            if (number == 1)
+            {
+                if (tControl.PossuiPokemon(PokeName) == false)
                 {
-                    TControl.ConcluirAdocao(userName, PokeName);
-                } 
+                    tControl.ConcluirAdocao(userName, PokeName);
+                }
                 else
                 {
                     Console.WriteLine("Pokemon já foi adotado!");
-                    Thread.Sleep(3000);
-                    TControl.Adotar(userName);
+                    Thread.Sleep(2000);
+                    tControl.Adotar(userName);
                 }
             }
-            else if (Escolha == 2)
+            else if (number == 2)
             {
-                TControl.Adotar(userName);
+                tControl.Adotar(userName);
             }
             else
             {
+                Console.WriteLine("opção inválida!");
+                Thread.Sleep(2000);
                 ConexaoAPI(userName, PokeName, ID_Pokemon);
             }
         }
