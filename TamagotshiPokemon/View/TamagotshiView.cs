@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using SQLitePCL;
-using System;
+﻿using API.Controller;
+using Pokemon.Model;
 using Tamagotshi.Controller;
-using Tamagotshi.Data;
 using User.Model;
 
 namespace Tamagotshi.View
@@ -27,6 +25,7 @@ namespace Tamagotshi.View
             Console.WriteLine("                           __/ |                      ");
             Console.WriteLine("                          |___/                       ");
         }
+
         public void GetUser()
         {
             Console.WriteLine("\n\n1 - Novo Usuário");
@@ -59,6 +58,7 @@ namespace Tamagotshi.View
             Console.WriteLine("3 - Squirtle");
             Console.WriteLine("4 - Voltar");
         }
+
         public void AdotarInfo(string userName, string PokeName)
         {
             Console.WriteLine("\n-------------------------------------------------------");
@@ -67,11 +67,13 @@ namespace Tamagotshi.View
             Console.WriteLine($"2 - Adotar {PokeName}");
             Console.WriteLine("3 - Voltar");
         }
+
         public void ConcluirAdocao(string userName, string PokeName)
         {
             OVO(PokeName);
             Console.WriteLine("\n1 - Voltar");
         }
+
         public void MeusMascotes(List<string> mascotes)
         {
             Console.WriteLine("\n----------------------- Mascotes -----------------------");
@@ -89,13 +91,67 @@ namespace Tamagotshi.View
 
             Console.WriteLine("\n4 - Voltar");
         }
-        public void API(string userName, float height, float weight, string PokeName)
+
+        public void SobreMascote(string userName, string PokeName, APIControl apiControl)
+        {
+            if (PokeName == "Bulbasaur")
+            {
+                int ID = 1;
+                PokemonModel.Pokemon pokemon = apiControl.ConexaoAPI(ID);
+
+                Console.Clear();
+                Console.WriteLine($"\n------------------ {PokeName} ------------------");
+                Console.WriteLine("Nome do Pokémon: " + pokemon.name);
+                Console.WriteLine("\nHabilidades:");
+
+                foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities) { Console.WriteLine(abilityInfo.Ability.Name); }
+
+                Console.WriteLine("\n1 - Voltar");
+
+            }
+            else if(PokeName == "Charmander")
+            {
+                int ID = 4;
+                PokemonModel.Pokemon pokemon = apiControl.ConexaoAPI(ID);
+
+                Console.Clear();
+                Console.WriteLine($"\n------------------ {PokeName} ------------------");
+                Console.WriteLine("Nome do Pokémon: " + pokemon.name);
+                Console.WriteLine("\nHabilidades:");
+
+                foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities) { Console.WriteLine(abilityInfo.Ability.Name); }
+
+                Console.WriteLine("\n1 - Voltar");
+            } 
+            else if(PokeName == "Squirtle")
+            {
+                int ID = 7;
+                PokemonModel.Pokemon pokemon = apiControl.ConexaoAPI(ID);
+
+                Console.Clear();
+                Console.WriteLine($"\n------------------ {PokeName} ------------------");
+                Console.WriteLine("Nome do Pokémon: " + pokemon.name);
+                Console.WriteLine("\nHabilidades:");
+
+                foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities) { Console.WriteLine(abilityInfo.Ability.Name); }
+
+                Console.WriteLine("\n1 - Voltar");
+
+            }
+        }
+
+        public void API(PokemonModel.Pokemon pokemon, string PokeName)
         {
             Console.WriteLine($"\n------------------ {PokeName} ------------------");
-            Console.WriteLine("Nome do Pokémon: " + userName);
-            Console.WriteLine("Altura: " + height);
-            Console.WriteLine("Peso: " + weight);
+            Console.WriteLine("Nome do Pokémon: " + pokemon.name);
+            Console.WriteLine("Altura: " + pokemon.height);
+            Console.WriteLine("Peso: " + pokemon.weight);
             Console.WriteLine("\nHabilidades:");
+
+            foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities)
+            {
+                Console.WriteLine(abilityInfo.Ability.Name);
+            }
         }
 
         public void OVO(string PokeName)
@@ -174,6 +230,7 @@ namespace Tamagotshi.View
             Pokemon(PokeName);
             Console.WriteLine(linha);
         }
+
         public void Pokemon(string PokeName)
         {
             if(PokeName == "Bulbasaur")

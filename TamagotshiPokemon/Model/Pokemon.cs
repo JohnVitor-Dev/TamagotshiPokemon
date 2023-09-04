@@ -20,7 +20,6 @@ namespace Pokemon.Model
         public int height { get; set; }
         public int weight { get; set; }
         public List<AbilityInfo> Abilities { get; set; }
-
     }
     }
 }

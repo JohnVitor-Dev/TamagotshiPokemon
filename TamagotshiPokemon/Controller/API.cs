@@ -22,64 +22,25 @@ namespace API.Controller
         }
        
         // Conexão Com a API
-        public void ConexaoAPI(string userName, string PokeName, int ID_Pokemon)
+        public PokemonModel.Pokemon ConexaoAPI(int ID_Pokemon)
         {
-            
             var options = new RestClientOptions($"https://pokeapi.co/api/v2/pokemon/{ID_Pokemon}/");
             var client = new RestClient(options);
-
             var request = new RestRequest("", Method.Get);
-
             var response = client.Execute(request);
+            PokemonModel.Pokemon pokemon = null;
 
-            PokemonModel.Pokemon pokemon = JsonConvert.DeserializeObject<PokemonModel.Pokemon>(response.Content);
-
-            Console.Clear();
-            tView.Titulo();
-            tView.API(pokemon.name, pokemon.height, pokemon.weight, PokeName);
-
-            foreach (PokemonModel.AbilityInfo abilityInfo in pokemon.Abilities)
-            {
-                Console.WriteLine(abilityInfo.Ability.Name);
-            }
-
-            Console.WriteLine("\n1 - Adotar");
-            Console.WriteLine("2 - Voltar");
-
-            string escolha = Console.ReadLine();
-            int number;
-            bool escolheisNumber = int.TryParse(escolha, out number);
-
-            if(escolheisNumber == false)
-            {
-                Console.WriteLine("Número inválido!");
-                Thread.Sleep(2000);
-                ConexaoAPI(userName, PokeName, ID_Pokemon);
-            }
-
-            if (number == 1)
-            {
-                if (tControl.PossuiPokemon(PokeName) == false)
-                {
-                    tControl.ConcluirAdocao(userName, PokeName);
-                }
-                else
-                {
-                    Console.WriteLine("Pokemon já foi adotado!");
-                    Thread.Sleep(2000);
-                    tControl.Adotar(userName);
-                }
-            }
-            else if (number == 2)
-            {
-                tControl.Adotar(userName);
+            if (response.IsSuccessful) 
+            { 
+                pokemon = JsonConvert.DeserializeObject<PokemonModel.Pokemon>(response.Content); 
             }
             else
             {
-                Console.WriteLine("opção inválida!");
-                Thread.Sleep(2000);
-                ConexaoAPI(userName, PokeName, ID_Pokemon);
+                Console.WriteLine("Não foi possível conectar-se à API. Por favor, verifique a sua conexão com a internet!");
+                Thread.Sleep(5000);
+                return null;
             }
+            return pokemon;
         }
     }
 }

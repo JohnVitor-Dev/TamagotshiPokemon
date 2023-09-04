@@ -1,8 +1,9 @@
 ﻿using API.Controller;
-using Start.Controller;
+using Pokemon.Model;
 using Tamagotshi.Data;
 using Tamagotshi.View;
 using User.Model;
+using static Pokemon.Model.PokemonModel;
 
 namespace Tamagotshi.Controller
 {
@@ -97,14 +98,14 @@ namespace Tamagotshi.Controller
         public void Login(UserModel user)
         {
             userGlobal = user;
-            MenuInicial(userGlobal.Name);
+            MenuInicial();
         }
 
-        public void MenuInicial(string userName)
+        public void MenuInicial()
         {
             Console.Clear();
             tView.Titulo();
-            tView.MenuInicial(userName);
+            tView.MenuInicial(userGlobal.Name);
 
             string escolha = Console.ReadLine();
             int number;
@@ -114,13 +115,13 @@ namespace Tamagotshi.Controller
             { 
                 Console.WriteLine("Número inválido!");
                 Thread.Sleep(2000);
-                MenuInicial(userName);
+                MenuInicial();
             }
 
             switch (number)
             {
                 case 1:
-                    Adotar(userName);
+                    Adotar(userGlobal.Name);
                     break;
                 case 2:
                     MyMascotes();
@@ -131,7 +132,7 @@ namespace Tamagotshi.Controller
                 default:
                     Console.WriteLine("Opção Inválida!!");
                     Thread.Sleep(2000);
-                    MenuInicial(userName);
+                    MenuInicial();
                     break;
             }
         }
@@ -174,7 +175,7 @@ namespace Tamagotshi.Controller
                     AdotarInfo(userName, PokeName, ID_Pokemon);
                     break;
                 case 4:
-                    MenuInicial(userName);
+                    MenuInicial();
                     break;
                 default:
                     Console.WriteLine("Opção inválida!");
@@ -204,7 +205,51 @@ namespace Tamagotshi.Controller
             switch (number)
             {
                 case 1:
-                    apiControl.ConexaoAPI(userName, PokeName, ID_Pokemon);
+                    PokemonModel.Pokemon pokemon = apiControl.ConexaoAPI(ID_Pokemon);
+
+                    if(pokemon == null) { MenuInicial(); }
+
+                    Console.Clear();
+                    tView.Titulo();
+                    tView.API(pokemon, PokeName);
+
+                    Console.WriteLine("\n1 - Adotar");
+                    Console.WriteLine("2 - Voltar");
+
+                    string escolha1 = Console.ReadLine();
+                    int number1;
+                    bool escolhaisNumber1 = int.TryParse(escolha1, out number1);
+
+                    if (escolhaisNumber1 == false)
+                    {
+                        Console.WriteLine("Número inválido!");
+                        Thread.Sleep(2000);
+                        AdotarInfo(userName, PokeName, ID_Pokemon);
+                    }
+
+                    if (number1 == 1)
+                    {
+                        if (PossuiPokemon(PokeName) == false)
+                        {
+                            ConcluirAdocao(userName, PokeName);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Pokemon já foi adotado!");
+                            Thread.Sleep(2000);
+                            Adotar(userName);
+                        }
+                    }
+                    else if (number1 == 2)
+                    {
+                        Adotar(userName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("opção inválida!");
+                        Thread.Sleep(2000);
+                        AdotarInfo(userName, PokeName, ID_Pokemon);
+                    }
                     break;
                 case 2:
                     if (PossuiPokemon(PokeName) == false)
@@ -222,6 +267,8 @@ namespace Tamagotshi.Controller
                     Adotar(userName);
                     break;
                 default:
+                    Console.WriteLine("Opção inválida!");
+                    Thread.Sleep(1000);
                     AdotarInfo(userName, PokeName, ID_Pokemon);
                     break;
             }
@@ -247,13 +294,6 @@ namespace Tamagotshi.Controller
             return Resposta;
         }
        
-        public void MascoteStatus(string PokeName)
-        {
-
-        }
-       
-        
-        
         public void ConcluirAdocao(string userName, string PokeName)
         {
             Console.Clear();
@@ -294,7 +334,7 @@ namespace Tamagotshi.Controller
                     switch (number)
                     {
                         case 1:
-                            MenuInicial(userName);
+                            MenuInicial();
                             break;
                         default:
                             Console.WriteLine("Opção Inválida!!");
@@ -306,7 +346,11 @@ namespace Tamagotshi.Controller
         public void MyMascotes()
         {
             int[] mascotes = {userGlobal.HasPokemon1, userGlobal.HasPokemon2, userGlobal.HasPokemon3};
-            int contador = 1;
+            int contador = 0;
+
+            string optionOne = null;
+            string optionTwo = null;
+            string optionThree = null;
 
             List<string> nomeMascotes = new List<string>();
 
@@ -314,14 +358,18 @@ namespace Tamagotshi.Controller
             {
                 if (mascotes[i] == 1)
                 {
-                    string pokemon = "";
+                    string pokemon = null;
 
                     if(i == 0) { pokemon = "Bulbasaur"; }
                     if (i == 1) { pokemon = "Charmander"; }
                     if (i == 2) { pokemon = "Squirtle"; }
 
-                    nomeMascotes.Add($"{contador} - {pokemon}");
                     contador++;
+                    nomeMascotes.Add($"{contador} - {pokemon}");
+
+                    if(contador == 1) { optionOne = pokemon; }
+                    if(contador == 2) { optionTwo = pokemon; }
+                    if(contador == 3) { optionThree = pokemon; }
                 }
             }
 
@@ -329,25 +377,87 @@ namespace Tamagotshi.Controller
             tView.Titulo();
             tView.MeusMascotes(nomeMascotes);
 
-            int Escolha = int.Parse(Console.ReadLine());
+            string escolha = Console.ReadLine();
+            int number;
+            bool escolhaisNumber = int.TryParse(escolha, out number);
 
-            if(Escolha == 4)
-            {
-                MenuInicial(userGlobal.Name);
+            if(escolhaisNumber == false) { Console.WriteLine("Número Inválido!"); Thread.Sleep(2000); MenuInicial(); }
 
-            } else
+            if (number == 1)
             {
-                Console.WriteLine("Ainda em desenvolvimento...");
-                Thread.Sleep(5000);
-                MenuInicial(userGlobal.Name);
+                if (optionOne == null || optionOne == "")
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Thread.Sleep(2000);
+                    MenuInicial();
+                }
+                else
+                {
+                    tView.SobreMascote(userGlobal.Name, optionOne, apiControl);
+
+                    string escolhaSP = Console.ReadLine();
+                    int numberSP;
+                    bool escolhaisNumberSP = int.TryParse(escolha, out number);
+
+                    if (escolhaisNumberSP == false) { Console.WriteLine("Número Inválido!"); Thread.Sleep(2000); MenuInicial(); }
+                    if (number == 1) { MenuInicial(); }
+                    else { MenuInicial(); }
+
+                }
+            }
+            else if (number == 2)
+            {
+                if (optionTwo == null || optionTwo == "")
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Thread.Sleep(2000);
+                    MenuInicial();
+                }
+                else
+                {
+                    tView.SobreMascote(userGlobal.Name, optionTwo, apiControl);
+                    string escolhaSP = Console.ReadLine();
+                    int numberSP;
+                    bool escolhaisNumberSP = int.TryParse(escolha, out number);
+
+                    if (escolhaisNumberSP == false) { Console.WriteLine("Número Inválido!"); Thread.Sleep(2000); MenuInicial(); }
+                    if (number == 1) { MenuInicial(); }
+                    else { MenuInicial(); }
+                }
+            }
+            else if (number == 3)
+            {
+                if (optionThree == null || optionThree == "")
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Thread.Sleep(2000);
+                    MenuInicial();
+                }
+                else
+                {
+                    tView.SobreMascote(userGlobal.Name, optionThree, apiControl);
+                    string escolhaSP = Console.ReadLine();
+                    int numberSP;
+                    bool escolhaisNumberSP = int.TryParse(escolha, out number);
+
+                    if (escolhaisNumberSP == false) { Console.WriteLine("Número Inválido!"); Thread.Sleep(2000); MenuInicial(); }
+                    if (number == 1) { MenuInicial(); }
+                    else { MenuInicial(); }
+                }
+            }
+            else if (number == 4)
+            {
+                MenuInicial();
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida!");
+                Thread.Sleep(2000);
+                MenuInicial();
             }
 
             
         }
-
-
-
-
 
     }
 }
